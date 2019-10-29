@@ -18,17 +18,18 @@ We need to integrate with following systems:
 
 In order to automate the configuration across multiple environments and multiple systems.
 
-People usually create a shell script to do ssh/api interaction with the system, and then create a concourse task to run the script with container. The number of scripts/concourse task grows fast and hard to maintain and iterate, while I would like to separate the concerns.
+People usually create a shell script to do ssh/api interaction with the system, and then create a concourse task to run the script inside container. The number of scripts/concourse task grows fast and hard to maintain and iterate, while I would like to separate the concerns.
 
 ## How
 
-* Each system has its own implementation of command line tool to take care of the interaction with systems.
-  
+* Each system has its own implementation of command line tool to take care of the interaction with systems. The command line can be used by **either** orchestrators or operators.
+
 * Concourse behave as a generic invoker/batch orchestrate systems' configuration
+
 * There are couple opportunities to extract the generic part:
-  * Most system has username, password, host/ip and port
+  * Most system has authentication with username, password, host/ip and port
   * Concourse execute commands multiple time in a loop to support batch configuration
-  * Concourse able to pass environment variable and arguments to the system command line
+  * Concourse pass environment variable and arguments to the system's command line
 
 ## Example
 
@@ -56,3 +57,9 @@ People usually create a shell script to do ssh/api interaction with the system, 
 
 * Run
   ```fly -t concourse execute -c task.yml -i pipeline=.```
+
+  ```
+  admin1 admin1 abc.com --what hello --word shaozhen
+  admin2 admin2 bcd.com --what hello --word shaozhen
+  admin3 admin3 ghf.com --what hello --word shaozhen  
+  ```
