@@ -1,0 +1,32 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: datianshi/python
+
+inputs:
+- name: pipeline
+
+run:
+  path: /usr/local/bin/python
+  args:
+  - pipeline/task.py
+params:
+  config:
+    credentials:
+    - username: admin1
+      password: admin1
+      host: abc.com
+    - username: admin2
+      password: admin2
+      host: bcd.com
+    - username: admin3
+      password: admin3
+      host: ghf.com
+    command:
+      exec: ./pipeline/test.sh
+      argument:
+      - --what hello
+      - --word shaozhen
